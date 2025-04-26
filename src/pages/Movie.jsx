@@ -8,10 +8,10 @@ function Movie() {
 
   useEffect(() => {
     console.log(id);
-    fetch(`http://localhost:4000/movies/${id}`)
+    fetch(`http://localhost:3000/movies/${id}`)
       .then((res) => res.json())
       .then((data) => setMovie(data));
-  }, []);
+  }, [id]);
 
   if (!movie) return <p>Loading movie...</p>;
 

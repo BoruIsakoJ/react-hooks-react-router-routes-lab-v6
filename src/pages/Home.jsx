@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import MovieCard from "../components/MovieCard"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 
 function Home() {
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-     fetch("http://localhost:4000/movies")
-       .then((res) => res.json())
-       .then((data) => setMovies(data))
-       .catch(err => console.log(err));
-  }, [])
+    fetch("http://localhost:3000/movies")
+      .then((res) => res.json())
+      .then((data) => setMovies(data))
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <>
@@ -19,14 +19,15 @@ function Home() {
       </header>
       <main>
         <h1>Home Page</h1>
-        <div>
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} id={movie.id} title={movie.title} />
-          ))}
-        </div>
+        {movies.map((movie) => (
+          <div key={movie.id}>
+            <h2>{movie.title}</h2>
+            <Link to={`/movie/${movie.id}`}>View Info</Link>
+          </div>
+        ))}
       </main>
     </>
   );
-};
+}
 
 export default Home;

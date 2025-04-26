@@ -5,10 +5,24 @@ function Directors() {
   const [directors, setDirectors] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/directors")
-      .then((res) => res.json())
-      .then((data) => setDirectors(data));
+    fetch("http://localhost:3000/directors")
+      .then((response) => response.json())
+      .then((directorData) => setDirectors(directorData));
   }, []);
+
+  const directorsList = directors.map((director) => {
+    const directorMovies = director.movies;
+    const directorMoviesList = directorMovies.map((movie) => {
+      return <li>{movie}</li>;
+    });
+
+    return (
+      <article key={director.id}>
+        <h2>{director.name}</h2>
+        <ul>{directorMoviesList}</ul>
+      </article>
+    );
+  });
 
   return (
     <>
@@ -17,19 +31,11 @@ function Directors() {
       </header>
       <main>
         <h1>Directors Page</h1>
-        {directors.map((director) => (
-          <article key={director.name}>
-            <h2>{director.name}</h2>
-            <ul>
-              {director.movies.map((movie, index) => (
-                <li key={index}>{movie}</li>
-              ))}
-            </ul>
-          </article>
-        ))}
+        {directorsList}
       </main>
     </>
   );
 }
 
 export default Directors;
+                        
